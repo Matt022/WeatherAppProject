@@ -1,5 +1,5 @@
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
 
 import { MatTabsModule } from '@angular/material/tabs';
 
@@ -14,7 +14,7 @@ import { HeatIndexCalculatorComponent } from "../tabs/heat-index-calculator/heat
     templateUrl: './week.component.html',
     styleUrl: './week.component.scss'
 })
-export class WeekComponent implements OnInit {
+export class WeekComponent {
     constructor() {}
 
     currentDate: Date = new Date(); // Aktuálny deň
@@ -26,35 +26,6 @@ export class WeekComponent implements OnInit {
     highlightedDayIndex: number | null = null;
 
     selectedDayIndex: number | null = null; // Uchováva index vybraného dňa
-
-    ngOnInit(): void {
-        this.initializeDays(); // Inicializácia dátumov na základe aktuálneho dňa
-    }
-
-    private initializeDays(): void {
-        this.daysHere = []; // Vyprázdnime zoznam dní
-        const daysBefore: number = 5; // Počet dní pred aktuálnym dňom
-        const daysAfter: number = 6; // Počet dní po aktuálnom dni
-
-        // Iterujeme od -5 do +7 (5 dní pred a 7 dní po aktuálnom dni)
-        for (let i: number = -daysBefore; i <= daysAfter; i++) {
-            const currentDate: Date = new Date(this.currentDate); // Vytvoríme kópiu aktuálneho dátumu
-            currentDate.setDate(this.currentDate.getDate() + i); // Posunieme dátum o i dní
-            const day: string = this.getDayName(currentDate); // Názov dňa
-            const date: string = this.formatDate(currentDate); // Formátovaný dátum
-            this.daysHere.push({ day, date }); // Pridáme deň do zoznamu
-        }
-    }
-
-    private formatDate(date: Date): string {
-        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-        return date.toLocaleDateString("en-EN", options); // Formátujeme dátum
-    }
-
-    private getDayName(date: Date): string {
-        const daysOfWeek: string[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        return daysOfWeek[date.getDay()]; // Vrátime názov dňa podľa indexu
-    }
 
     receiveDate(date: string) {
         this.setDay = date;
@@ -88,5 +59,9 @@ export class WeekComponent implements OnInit {
 
     switchDate(date: { day: string, date: string; }): void {
         this.setDay = date.date;
+    }
+
+    getInitializedDays(initializedDays: { day: string, date: string }[]): void {
+        this.daysHere = [...initializedDays];
     }
 }

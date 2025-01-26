@@ -51,7 +51,20 @@ export class ChartComponent implements OnChanges {
                 ],
             };
 
-            this.currentDate = this.data.date.toLocaleDateString();
+            const day: string = this.getDayName(this.data.date);
+            const date: string = this.formatDate(this.data.date);
+
+            this.currentDate = `${day} | ${date}`;
         }
+    }
+
+    private formatDate(date: Date): string {
+        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString("en-EN", options); // Formátujeme dátum
+    }
+
+    private getDayName(date: Date): string {
+        const daysOfWeek: string[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        return daysOfWeek[date.getDay()]; // Vrátime názov dňa podľa indexu
     }
 }
