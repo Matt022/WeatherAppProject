@@ -1,0 +1,15 @@
+section.chart-container {
+    width: 80%;
+    height: fit-content;
+    margin: 20px auto 0 auto;
+    // border: 1px solid red;
+}
+
+.mat-mdc-tab-body-content {
+    visibility: visible;
+    display: flex;
+    width: 80%;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}

@@ -1,0 +1,51 @@
+main {
+    padding: 20px;
+
+    mat-tab-group {
+        mat-tab {
+            overflow-x: hidden;
+        }
+    }
+
+    div#calendar {
+        background-color: white;
+        border: 1px solid rgb(204, 204, 204);
+        padding: 20px;
+        text-align: center;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+        display: flex;
+
+        div#days {
+            display: grid;
+            gap: 10px;
+
+            div.day {
+                padding: 15px;
+                border: 1px solid rgb(204, 204, 204);
+                background-color: rgb(255, 255, 255);
+                text-shadow: rgb(255, 255, 255) 1px 1px 2px;
+                font-weight: bold;
+                color: black;
+                display: inline-block;
+                max-width: 250px;
+                line-height: 1.6;
+            }
+
+            div.today {
+                background-color: rgb(2, 136, 247);
+                color: #fff;
+                font-weight: bold;
+                text-shadow: 1px 1px 1px black;
+            }
+        }
+
+        hr {
+            margin: 0;
+            margin-left: 30px;
+        }
+
+        section#data {
+            width: 100%;
+        }
+    }
+}
