@@ -14,7 +14,7 @@
                 </div>
                 <hr>
                 <section id="data">
-                    <app-weather-table [setDate]="setDay" (chartData)="getChartData($event)" (pageIndex)="getPageIndex($event)"/>
+                    <app-weather-table [setDate]="setDay" (chartData)="getChartData($event)" (pageIndex)="getPageIndex($event)" (daysInitialize)="getInitializedDays($event)"/>
                 </section>
             </div>
         </mat-tab>

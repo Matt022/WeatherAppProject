@@ -21,6 +21,8 @@ export class WeatherTableComponent implements OnInit, OnChanges {
     @Input() setDate: string = "";
     @Output() chartData: EventEmitter<{ date: Date, hours: number[], temperatures: number[]; }> = new EventEmitter<{ date: Date, hours: number[], temperatures: number[]; }>;
     @Output() pageIndex: EventEmitter<number> = new EventEmitter<number>();
+    @Output() daysInitialize: EventEmitter<{ day: string, date: string }[]> = new EventEmitter<{ day: string, date: string }[]>();
+
 
     hourlyWeatherData: {
         hour: number;
@@ -49,6 +51,25 @@ export class WeatherTableComponent implements OnInit, OnChanges {
         this.apiService.getData().subscribe({
             next: data => {
                 this.hourlyWeatherData = this.mapApiDataToTableData(data);
+                const dateTimes = this.hourlyWeatherData.map(data => data.dateTimes);
+                const days: {
+                    day: string;
+                    date: string;
+                }[] = dateTimes.map(dateTime => {
+                    const day: string = this.getDayName(dateTime);
+                    const date: string = this.formatDate(dateTime);
+                    return {day, date}; // Získaj deň
+                });
+
+                // Odstránenie duplikátov podľa hodnoty
+                const arraySet: {
+                    day: string;
+                    date: string;
+                }[] = days.filter((value, index, self) =>
+                    index === self.findIndex((t) => t.day === value.day && t.date === value.date)
+                );
+
+                this.daysInitialize.emit(arraySet);
                 this.updatePagedWeatherData();
                 this.setCurrentDayIndex();
             },
@@ -62,6 +83,16 @@ export class WeatherTableComponent implements OnInit, OnChanges {
         if (changes['setDate'] && this.setDate) {
             this.setDayIndex(this.setDate);
         }
+    }
+
+    private formatDate(date: Date): string {
+        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString("en-EN", options); // Formátujeme dátum
+    }
+
+    private getDayName(date: Date): string {
+        const daysOfWeek: string[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        return daysOfWeek[date.getDay()]; // Vrátime názov dňa podľa indexu
     }
 
     private mapApiDataToTableData(apiData: any): any[] {
