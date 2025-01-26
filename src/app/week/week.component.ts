@@ -31,7 +31,7 @@ export class WeekComponent implements OnInit {
         this.initializeDays(); // Inicializácia dátumov na základe aktuálneho dňa
     }
 
-    initializeDays(): void {
+    private initializeDays(): void {
         this.daysHere = []; // Vyprázdnime zoznam dní
         const daysBefore: number = 5; // Počet dní pred aktuálnym dňom
         const daysAfter: number = 6; // Počet dní po aktuálnom dni

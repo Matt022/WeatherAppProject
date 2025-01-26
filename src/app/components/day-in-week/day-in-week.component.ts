@@ -11,12 +11,6 @@ export class DayInWeekComponent {
     @Input() theDay: { day: string, date: string; } = { day: "", date: "" };
     @Output() receivedDate: EventEmitter<string> = new EventEmitter<string>();
 
-    isToday(date: string | null | undefined): boolean {
-        const today: Date = new Date();
-        const parsedDate: Date = new Date(date!);
-        return today.toDateString() === parsedDate.toDateString();
-    }
-
     switchDay(date: { day: string, date: string; }): void {
         const formattedDate: Date = this.formatDateString(date.date);
         this.receivedDate.emit(formattedDate.toDateString());
