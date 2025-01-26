@@ -8,9 +8,41 @@ main {
     .mat-header-cell,
     .mat-cell {
         text-align: center;
+        width: 150px;
     }
 
     mat-paginator {
         margin-top: 1rem;
     }
+}
+
+.success {
+    background-color: rgb(242, 253, 245);
+    color: rgb(71, 152, 101);
+    border: 1px solid rgb(209, 234, 219);
+}
+
+.info {
+    background-color: rgb(240, 247, 255);
+    color: rgb(75, 110, 184);
+    border: 1px solid rgb(205, 217, 232);
+}
+.warn {
+    background-color: rgb(254, 251, 232);
+    color: rgb(186, 149, 67);
+    border: 1px solid rgb(243, 236, 190);
+}
+
+.danger {
+    background-color: rgb(253, 243, 242);
+    color: rgb(211, 84, 84);
+    border: 1px solid rgb(234, 211, 212);
+}
+
+.header-cell {
+    background-color: rgb(241, 244, 249);
+    color: rgb(102, 111, 124);
+    border: 2px solid rgb(228, 232, 235);
+    font-weight: bold;
+    border-bottom: 2px solid rgb(0, 0, 0);
 }

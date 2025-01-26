@@ -8,8 +8,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     styleUrls: ['./day-in-week.component.scss']
 })
 export class DayInWeekComponent {
-    constructor() {}
-
     @Input() theDay: { day: string, date: string; } = { day: "", date: "" };
     @Output() receivedDate: EventEmitter<string> = new EventEmitter<string>();
 
@@ -24,11 +22,11 @@ export class DayInWeekComponent {
         this.receivedDate.emit(formattedDate.toDateString());
     }
 
-    formatDateString(dateString: string): Date {
-        const dateParts = dateString.split(' '); // Rozdelenie reťazca na časti
-        const month = new Date(Date.parse(dateParts[0] + " 1")).getMonth(); // Získanie indexu mesiaca
-        const day = parseInt(dateParts[1], 10);
-        const year = parseInt(dateParts[2], 10);
+    private formatDateString(dateString: string): Date {
+        const dateParts: string[] = dateString.split(' '); // Rozdelenie reťazca na časti
+        const month: number = new Date(Date.parse(dateParts[0] + " 1")).getMonth(); // Získanie indexu mesiaca
+        const day: number = parseInt(dateParts[1], 10);
+        const year: number = parseInt(dateParts[2], 10);
         return new Date(year, month, day); // Vytvorenie nového dátumu
     }
 }

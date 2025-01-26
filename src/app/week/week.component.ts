@@ -34,7 +34,7 @@ export class WeekComponent implements OnInit {
     initializeDays(): void {
         this.daysHere = []; // Vyprázdnime zoznam dní
         const daysBefore: number = 5; // Počet dní pred aktuálnym dňom
-        const daysAfter: number = 5; // Počet dní po aktuálnom dni
+        const daysAfter: number = 6; // Počet dní po aktuálnom dni
 
         // Iterujeme od -5 do +7 (5 dní pred a 7 dní po aktuálnom dni)
         for (let i: number = -daysBefore; i <= daysAfter; i++) {
@@ -89,6 +89,4 @@ export class WeekComponent implements OnInit {
     switchDate(date: { day: string, date: string; }): void {
         this.setDay = date.date;
     }
-
 }
-

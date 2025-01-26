@@ -1,42 +1,44 @@
-<mat-paginator [length]="hourlyWeatherData.length" [pageSize]="24" (page)="onPageChange($event)"></mat-paginator>
-<main>
-    <table mat-table [dataSource]="pagedWeatherData" class="mat-elevation-z8">
-        <ng-container matColumnDef="hour">
-            <th mat-header-cell *matHeaderCellDef> Hodina </th>
-            <td mat-cell *matCellDef="let element"> {{ formatHour(element.hour )}} </td>
-        </ng-container>
+<div *ngIf="pagedWeatherData && hourlyWeatherData">
+    <mat-paginator [length]="hourlyWeatherData.length" [pageSize]="24" (page)="onPageChange($event)"></mat-paginator>
+    <main>
+        <table mat-table [dataSource]="pagedWeatherData" class="mat-elevation-z8">
+            <ng-container matColumnDef="hour">
+                <th mat-header-cell *matHeaderCellDef class="header-cell"> Hour </th>
+                <td mat-cell *matCellDef="let element" class="{{element.weatherCode.severity}}"> {{ formatHour(element.hour )}} </td>
+            </ng-container>
 
-        <ng-container matColumnDef="dateTimes">
-            <th mat-header-cell *matHeaderCellDef> Dátum </th>
-            <td mat-cell *matCellDef="let element"> {{ element.dateTimes | date: 'dd. MM. yyyy' }} </td>
-        </ng-container>
+            <ng-container matColumnDef="dateTimes">
+                <th mat-header-cell *matHeaderCellDef class="header-cell"> Date </th>
+                <td mat-cell *matCellDef="let element" class="{{element.weatherCode.severity}}"> {{ element.dateTimes | date: 'dd. MM. yyyy' }} </td>
+            </ng-container>
 
-        <ng-container matColumnDef="temperatures">
-            <th mat-header-cell *matHeaderCellDef> Teplota </th>
-            <td mat-cell *matCellDef="let element"> {{ element.temperatures }} °C </td>
-        </ng-container>
+            <ng-container matColumnDef="temperatures">
+                <th mat-header-cell *matHeaderCellDef class="header-cell"> Temperature (°C)</th>
+                <td mat-cell *matCellDef="let element" class="{{element.weatherCode.severity}}"> {{ element.temperatures }} </td>
+            </ng-container>
 
-        <ng-container matColumnDef="humidity">
-            <th mat-header-cell *matHeaderCellDef> Vlhkosť </th>
-            <td mat-cell *matCellDef="let element"> {{ element.humidity }} % </td>
-        </ng-container>
+            <ng-container matColumnDef="humidity">
+                <th mat-header-cell *matHeaderCellDef class="header-cell"> Relative Humidity (%)</th>
+                <td mat-cell *matCellDef="let element" class="{{element.weatherCode.severity}}"> {{ element.humidity }} </td>
+            </ng-container>
 
-        <ng-container matColumnDef="weatherCode">
-            <th mat-header-cell *matHeaderCellDef> Počasie </th>
-            <td mat-cell *matCellDef="let element"> {{element.weatherCode.description}}</td>
-        </ng-container>
+            <ng-container matColumnDef="weatherCode">
+                <th mat-header-cell *matHeaderCellDef class="header-cell"> Weather state </th>
+                <td mat-cell *matCellDef="let element" class="{{element.weatherCode.severity}}"> {{element.weatherCode.description}}</td>
+            </ng-container>
 
-        <ng-container matColumnDef="pressure">
-            <th mat-header-cell *matHeaderCellDef> Tlak </th>
-            <td mat-cell *matCellDef="let element"> {{ element.pressure }} hPa </td>
-        </ng-container>
+            <ng-container matColumnDef="pressure">
+                <th mat-header-cell *matHeaderCellDef class="header-cell"> Pressure (hPa)</th>
+                <td mat-cell *matCellDef="let element" class="{{element.weatherCode.severity}}"> {{ element.pressure }} </td>
+            </ng-container>
 
-        <ng-container matColumnDef="visibility">
-            <th mat-header-cell *matHeaderCellDef> Viditeľnosť </th>
-            <td mat-cell *matCellDef="let element"> {{ element.visibility / 1000 }} km </td>
-        </ng-container>
+            <ng-container matColumnDef="visibility">
+                <th mat-header-cell *matHeaderCellDef class="header-cell"> Visibility (km)</th>
+                <td mat-cell *matCellDef="let element" class="{{element.weatherCode.severity}}"> {{ element.visibility / 1000 }} </td>
+            </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-</main>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </main>
+</div>

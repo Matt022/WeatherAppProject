@@ -1,45 +1,91 @@
-section#heat-index {
-    margin: 5px;
-    padding: 5px;
-    width: 90%;
-    height: max-content;
-    border: 1px solid red;
+div.main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
 
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    section#heat-index {
+        margin-top: 10px;
+        height: 265px;
 
-        main {
+        form {
             display: flex;
-            gap: 20px;
-            width: 100%;
-            height: fit-content;
-            margin-bottom: 20px;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
 
-            .example-full-width {
-                border: 1px solid #a3a4a7;
-                width: 300px;
+            main {
+                display: flex;
+                gap: 20px;
+                width: 100%;
                 height: fit-content;
-                margin: 5px 10px;
+                margin-bottom: 20px;
+                justify-content: center;
+
+                .example-full-width {
+                    border: 1px solid rgb(163, 164, 167);
+                    width: 350px;
+                    height: fit-content;
+                    margin: 5px 10px;
+                    padding: 5px 10px;
+                    border-radius: 6px;
+                    background: rgb(255, 255, 255);
+                    box-shadow: 5px 5px 10px rgb(205, 206, 211),
+                        -5px -5px 10px rgb(255, 255, 255);
+                }
+            }
+
+            button {
+                height: fit-content;
+                background-color: rgb(33, 82, 241);
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                padding: 5px 15px;
+                border-radius: 5px;
+                color: rgb(241, 242, 248);
+                margin-bottom: 20px;
+
+                transition: background-color 0.3s ease, color 0.3s ease;
+
+                &:hover {
+                    background-color: rgb(90, 126, 247);
+                }
+            }
+
+            div#heatIndexResult {
+                width: 300px;
                 padding: 5px 10px;
-                border-radius: 6px;
-                background: #ffffff;
-                box-shadow: 5px 5px 10px #cdced3,
-                    -5px -5px 10px #ffffff;
+                text-align: left;
+
+                p {
+                    font-weight: 500;
+
+                    span {
+                        font-weight: 200;
+                    }
+                }
             }
         }
     }
 
-}
-button {
-    height: fit-content;
-    background-color: #1b50ff;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 5px 15px;
-    border-radius: 5px;
-    color: #f1f2f8;
+    section#result-history {
+        margin-top: 10px;
+
+        h3 {
+            margin: 5px 10px;
+            font-weight: 400;
+        }
+
+        div.heat-index-result-history {
+            margin: 5px 10px;
+            padding: 10px 15px;
+
+            background-color: rgb(217, 229, 243);
+            color: rgb(75, 110, 184);
+            border: 1px solid rgb(192, 203, 216);
+            border-radius: 4px;
+
+            font-weight: 400;
+        }
+    }
 }

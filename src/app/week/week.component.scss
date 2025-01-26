@@ -1,5 +1,5 @@
 main {
-    padding: 20px;
+    padding: 0 20px;
 
     mat-tab-group {
         mat-tab {
@@ -8,8 +8,10 @@ main {
     }
 
     div#calendar {
-        background-color: white;
-        border: 1px solid rgb(204, 204, 204);
+        background-color: rgb(255, 255, 255);
+        margin-top: 5px;
+        border: 1px solid rgb(160, 159, 159);
+        border-radius: 5px;
         padding: 20px;
         text-align: center;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
@@ -25,7 +27,7 @@ main {
                 background-color: rgb(255, 255, 255);
                 text-shadow: rgb(255, 255, 255) 1px 1px 2px;
                 font-weight: bold;
-                color: black;
+                color: rgb(0, 0, 0);
                 display: inline-block;
                 max-width: 250px;
                 line-height: 1.6;
@@ -35,7 +37,7 @@ main {
                 background-color: rgb(2, 136, 247);
                 color: #fff;
                 font-weight: bold;
-                text-shadow: 1px 1px 1px black;
+                text-shadow: 1px 1px 1px rgb(0, 0, 0);
             }
         }
 
@@ -46,16 +48,15 @@ main {
 
         section#data {
             width: 100%;
+            margin-left: 20px;
         }
     }
 }
 
 .day {
     padding: 0 15px;
-    border: 1px solid rgb(204, 204, 204);
-    background-color: rgb(255, 255, 255);
     text-shadow: rgb(255, 255, 255) 1px 1px 2px;
-    color: black;
+    color: rgb(0, 0, 0);
     width: 120px;
     font-size: 13px;
     line-height: 1.6;
@@ -63,9 +64,10 @@ main {
     height: fit-content;
 
     border-radius: 6px;
-    background: #c8ddf9;
-    box-shadow: 5px 5px 10px #a0b1c7,
-        -5px -5px 10px #f0ffff;
+
+    background-color: rgb(240, 247, 255);
+    color: rgb(75, 110, 184);
+    border: 1px solid rgb(205, 217, 232);
 
     &:hover {
         cursor: pointer;
@@ -81,6 +83,6 @@ main {
 
 .today {
     background-color: rgb(2, 136, 247);
-    color: #fff;
+    color: rgb(255, 255, 255);
     text-shadow: 1px 1px 1px black;
 }
