@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+
 import { ApiService } from '../../services/api.service';
-import { weatherCodes } from '../../datamodels/weather-code-data.model';
+import { WeatherCodeDataModel, weatherCodes } from '../../datamodels/weather-code-data.model';
 
 @Component({
     selector: 'app-weather-table',
@@ -17,31 +19,34 @@ export class WeatherTableComponent implements OnInit, OnChanges {
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     displayedColumns: string[] = ['hour', 'dateTimes', 'temperatures', 'humidity', 'weatherCode', 'pressure', 'visibility'];
     @Input() setDate: string = "";
-    @Output() chartData: EventEmitter<{hours: number[], temperatures: number[]}> = new EventEmitter<{hours: number[], temperatures: number[]}>;
+    @Output() chartData: EventEmitter<{ date: Date, hours: number[], temperatures: number[]; }> = new EventEmitter<{ date: Date, hours: number[], temperatures: number[]; }>;
+    @Output() pageIndex: EventEmitter<number> = new EventEmitter<number>();
 
     hourlyWeatherData: {
         hour: number;
         dateTimes: Date;
         temperatures: number;
         humidity: number;
-        weatherCode: string;
+        weatherCode: WeatherCodeDataModel;
         pressure: number;
         visibility: number;
     }[] = [];
+
     pagedWeatherData: {
         hour: number;
         dateTimes: Date;
         temperatures: number;
         humidity: number;
-        weatherCode: string;
+        weatherCode: WeatherCodeDataModel;
         pressure: number;
         visibility: number;
     }[] = [];
-    currentPage = 0;
-    pageSize = 24;
 
-    daysBefore = 5;
-    daysAfter = 7;
+    currentPage: number = 0;
+    pageSize: number = 24;
+
+    daysBefore: number = 5;
+    daysAfter: number = 7;
 
     //-------------------------------------------------------------------------------------------
 
@@ -57,7 +62,7 @@ export class WeatherTableComponent implements OnInit, OnChanges {
             next: data => {
                 this.hourlyWeatherData = this.mapApiDataToTableData(data);
                 this.updatePagedWeatherData();
-                this.currentDayIndex();
+                this.setCurrentDayIndex();
             },
             error: err => {
                 console.error('Chyba pri načítavaní dát:', err);
@@ -71,7 +76,7 @@ export class WeatherTableComponent implements OnInit, OnChanges {
         }
     }
 
-    mapApiDataToTableData(apiData: any): any[] {
+    private mapApiDataToTableData(apiData: any): any[] {
         const tableData: any[] = [];
         for (let i: number = 0; i < apiData.hourly.time.length; i++) {
             const dateTime: Date = new Date(apiData.hourly.time[i]); // Prevod ISO stringu na Date objekt
@@ -88,15 +93,18 @@ export class WeatherTableComponent implements OnInit, OnChanges {
         }
         return tableData;
     }
-    // Stránkovanie - aktualizácia dát na základe aktuálnej strany
-    updatePagedWeatherData(): void {
+
+    private updatePagedWeatherData(): void {
         const startIndex: number = this.currentPage * this.pageSize;
         const endIndex: number = startIndex + this.pageSize;
+        this.pageIndex.emit(this.currentPage);
         this.pagedWeatherData = this.hourlyWeatherData.slice(startIndex, endIndex);
 
         const currentPageTemperatures: number[] = this.pagedWeatherData.map(data => data.temperatures);
         const hoursPerDay: number[] = this.pagedWeatherData.map(data => data.hour);
-        this.chartData.emit({hours: hoursPerDay, temperatures: currentPageTemperatures});
+        const date: Date = this.pagedWeatherData[0].dateTimes;
+
+        this.chartData.emit({ date: date, hours: hoursPerDay, temperatures: currentPageTemperatures });
     }
 
     // Reakcia na zmenu strany tabuľky
@@ -106,17 +114,17 @@ export class WeatherTableComponent implements OnInit, OnChanges {
         this.updatePagedWeatherData();
     }
 
-    currentDayIndex(): void {
-        const currentDayString: string = new Date().toDateString(); // Získať dátum ako string pre porovnanie
+    private updateCurrentPage(dateString: string): void {
+        const currentDayDate: Date = new Date(dateString); // Prevod reťazca na Date objekt
 
         // Hľadať index aktuálneho dňa v hourlyWeatherData
         for (let index: number = 0; index < this.hourlyWeatherData.length; index++) {
             const dataDate: Date = new Date(this.hourlyWeatherData[index].dateTimes);
-            if (dataDate.toDateString() === currentDayString) {
+            if (dataDate.toDateString() === currentDayDate.toDateString()) {
                 this.currentPage = Math.floor(index / this.pageSize);
                 this.updatePagedWeatherData();
 
-                // Aktualizuj paginator manuálne
+                // Aktualizuj paginator
                 if (this.paginator) {
                     this.paginator.pageIndex = this.currentPage;
                 }
@@ -125,27 +133,18 @@ export class WeatherTableComponent implements OnInit, OnChanges {
         }
     }
 
-    setDayIndex(dateString: string): void {
-        // Hľadať index aktuálneho dňa v hourlyWeatherData
-        for (let index: number = 0; index < this.hourlyWeatherData.length; index++) {
-            const dataDate: Date = new Date(this.hourlyWeatherData[index].dateTimes);
-            if (dataDate.toDateString() === dateString) {
-                this.currentPage = Math.floor(index / this.pageSize);
-                this.updatePagedWeatherData();
-
-                // Aktualizuj paginator 
-                if (this.paginator) {
-                    this.paginator.pageIndex = this.currentPage;
-                }
-                break; // Akonáhle nájdeme aktuálny deň, skončíme hľadanie
-            }
-        }
+    private setCurrentDayIndex(): void {
+        this.updateCurrentPage(new Date().toDateString()); // Zavoláme pomocnú metódu s aktuálnym dňom
     }
 
-    private getWeatherCodeDescription(code: number): string | undefined {
+    private setDayIndex(dateString: string): void {
+        this.updateCurrentPage(dateString); // Zavoláme pomocnú metódu s daným dňom
+    }
+
+    private getWeatherCodeDescription(code: number): WeatherCodeDataModel | undefined {
         for (let i: number = 0; i < weatherCodes.length; i++) {
             if (weatherCodes[i].code == code) {
-                return weatherCodes[i].description;
+                return weatherCodes[i];
             }
         }
 
@@ -153,6 +152,6 @@ export class WeatherTableComponent implements OnInit, OnChanges {
     }
 
     formatHour(hour: number): string {
-        return `${hour.toString().padStart(2, '0')}:00`
+        return `${hour.toString().padStart(2, '0')}:00`;
     }
 }

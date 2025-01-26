@@ -1,20 +1,28 @@
 <main>
-    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndex"
-        (selectedTabChange)="onTabChange($event)">
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [(selectedIndex)]="selectedTabIndex">
         <mat-tab label="Week">
             <div id="calendar">
                 <div id="days">
-                    <app-day-in-week *ngFor="let item of daysHere; let i = index" [theDay]="item" (receivedDate)="receiveDate($event)" [isHighlighted]="highlightedDayIndex === i"/>
+                    <app-day-in-week class="day"
+                                    *ngFor="let item of daysHere; let i = index"
+                                    [theDay]="item"
+                                    (receivedDate)="receiveDate($event)"
+                                    [ngClass]="{'highlighted-day': isSelected(i), 'today': isToday(item.date)}"
+                                    (click)="switchDay(i)">
+
+                    </app-day-in-week>
                 </div>
                 <hr>
                 <section id="data">
-                    <app-weather-table [setDate]="setDay" (chartData)="getChartData($event)"/>
+                    <app-weather-table [setDate]="setDay" (chartData)="getChartData($event)" (pageIndex)="getPageIndex($event)"/>
                 </section>
             </div>
         </mat-tab>
+
         <mat-tab label="Chart">
             <app-chart [data]="chartData"/>
         </mat-tab>
-        <mat-tab label="Third">Content 3</mat-tab>
+        
+        <mat-tab label="Third"></mat-tab>
     </mat-tab-group>
 </main>

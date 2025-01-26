@@ -1,5 +1,3 @@
-<!-- <h1>Hodinová predpoveď počasia</h1>
-<button (click)="currentDayIndex()">Current day</button> -->
 <mat-paginator [length]="hourlyWeatherData.length" [pageSize]="24" (page)="onPageChange($event)"></mat-paginator>
 <main>
     <table mat-table [dataSource]="pagedWeatherData" class="mat-elevation-z8">
@@ -25,7 +23,7 @@
 
         <ng-container matColumnDef="weatherCode">
             <th mat-header-cell *matHeaderCellDef> Počasie </th>
-            <td mat-cell *matCellDef="let element"> {{ element.weatherCode }} </td>
+            <td mat-cell *matCellDef="let element"> {{element.weatherCode.description}}</td>
         </ng-container>
 
         <ng-container matColumnDef="pressure">
