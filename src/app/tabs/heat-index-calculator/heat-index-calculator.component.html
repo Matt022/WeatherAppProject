@@ -1,0 +1,26 @@
+<section id="heat-index">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <main>
+            <mat-form-field class="example-full-width">
+                <input matInput formControlName="temperature" type="number" placeholder="Temperature">
+                <mat-error *ngIf="form.get('temperature')?.hasError('required')">Temperature is required</mat-error>
+                <mat-error *ngIf="form.get('temperature')?.hasError('lessThan80')">Temperature cannot be less than 80°F</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-select formControlName="temperatureUnit" placeholder="Temperature units">
+                    <mat-option *ngFor="let unit of temperatureUnits" [value]="unit">{{unit}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('temperatureUnit')?.hasError('required')">Temperature unit is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <input matInput formControlName="relativeHumidity" type="number" placeholder="Relative Humidity">
+                <mat-error *ngIf="form.get('relativeHumidity')?.hasError('required')">Relative humidity is required</mat-error>
+            </mat-form-field>
+        </main>
+
+        <button type="submit">Submit</button>
+    </form>
+
+</section>
