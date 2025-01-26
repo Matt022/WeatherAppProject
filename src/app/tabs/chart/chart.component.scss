@@ -2,7 +2,10 @@ section.chart-container {
     width: 80%;
     height: fit-content;
     margin: 20px auto 0 auto;
-    // border: 1px solid red;
+
+    h2 {
+        margin-bottom: 0;
+    }
 }
 
 .mat-mdc-tab-body-content {

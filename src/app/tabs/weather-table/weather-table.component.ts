@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 import { ApiService } from '../../services/api.service';
 import { WeatherCodeDataModel, weatherCodes } from '../../datamodels/weather-code-data.model';
@@ -44,18 +44,6 @@ export class WeatherTableComponent implements OnInit, OnChanges {
 
     currentPage: number = 0;
     pageSize: number = 24;
-
-    daysBefore: number = 5;
-    daysAfter: number = 7;
-
-    //-------------------------------------------------------------------------------------------
-
-    dateTimes: string[] = [];
-    temperatures: number[] = [];
-    relative_humidity: number[] = [];
-    weather_status: number[] = [];
-    pressure: number[] = [];
-    visibility: number[] = [];
 
     ngOnInit(): void {
         this.apiService.getData().subscribe({
