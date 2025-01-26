@@ -6,10 +6,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ChartComponent } from "../tabs/chart/chart.component";
 import { DayInWeekComponent } from "../components/day-in-week/day-in-week.component";
 import { WeatherTableComponent } from "../tabs/weather-table/weather-table.component";
+import { HeatIndexCalculatorComponent } from "../tabs/heat-index-calculator/heat-index-calculator.component";
 
 @Component({
     selector: 'app-week',
-    imports: [CommonModule, MatTabsModule, DayInWeekComponent, WeatherTableComponent, ChartComponent],
+    imports: [CommonModule, MatTabsModule, DayInWeekComponent, WeatherTableComponent, ChartComponent, HeatIndexCalculatorComponent],
     templateUrl: './week.component.html',
     styleUrl: './week.component.scss'
 })

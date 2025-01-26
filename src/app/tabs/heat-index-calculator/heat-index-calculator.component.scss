@@ -1,0 +1,45 @@
+section#heat-index {
+    margin: 5px;
+    padding: 5px;
+    width: 90%;
+    height: max-content;
+    border: 1px solid red;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        main {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            height: fit-content;
+            margin-bottom: 20px;
+            justify-content: center;
+
+            .example-full-width {
+                border: 1px solid #a3a4a7;
+                width: 300px;
+                height: fit-content;
+                margin: 5px 10px;
+                padding: 5px 10px;
+                border-radius: 6px;
+                background: #ffffff;
+                box-shadow: 5px 5px 10px #cdced3,
+                    -5px -5px 10px #ffffff;
+            }
+        }
+    }
+
+}
+button {
+    height: fit-content;
+    background-color: #1b50ff;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px 15px;
+    border-radius: 5px;
+    color: #f1f2f8;
+}
