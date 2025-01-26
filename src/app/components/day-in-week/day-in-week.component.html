@@ -1,4 +1,4 @@
-<div class="day" [ngClass]="{ 'today': isToday(theDay.date), 'highlighted-day': isHighlighted, 'non-highlighted-day': !isHighlighted}" (click)="switchDay(theDay); toggleClass()">
+<div [ngClass]="{ 'today': isToday(theDay.date)}" (click)="switchDay(theDay);">
     {{ theDay.day || 'N/A' }}
     <br />
     {{ theDay.date || 'N/A' }}

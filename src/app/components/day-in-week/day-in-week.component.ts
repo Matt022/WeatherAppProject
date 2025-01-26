@@ -8,8 +8,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     styleUrls: ['./day-in-week.component.scss']
 })
 export class DayInWeekComponent {
+    constructor() {}
+
     @Input() theDay: { day: string, date: string; } = { day: "", date: "" };
-    @Input() isHighlighted: boolean = false;
     @Output() receivedDate: EventEmitter<string> = new EventEmitter<string>();
 
     isToday(date: string | null | undefined): boolean {
@@ -30,11 +31,4 @@ export class DayInWeekComponent {
         const year = parseInt(dateParts[2], 10);
         return new Date(year, month, day); // Vytvorenie nového dátumu
     }
-
-    isActive: boolean = false; // Premenná na sledovanie stavu
-
-    toggleClass() {
-        this.isHighlighted = !this.isHighlighted;// Prepínanie hodnoty
-    }
-
 }

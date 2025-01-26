@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+
 import { MatTabsModule } from '@angular/material/tabs';
+
+import { ChartComponent } from "../tabs/chart/chart.component";
 import { DayInWeekComponent } from "../components/day-in-week/day-in-week.component";
-import { WeatherTableComponent } from "../components/weather-table/weather-table.component";
-import { ChartComponent } from "../components/chart/chart.component";
+import { WeatherTableComponent } from "../tabs/weather-table/weather-table.component";
 
 @Component({
     selector: 'app-week',
@@ -18,9 +20,11 @@ export class WeekComponent implements OnInit {
     daysHere: { day: string, date: string }[] = []; // Zoznam dní na zobrazenie
     selectedTabIndex: number = 0;
     setDay: string = "";
-    chartData: {hours: number[], temperatures: number[]} = {hours: [], temperatures: []};
+    chartData: {date: Date, hours: number[], temperatures: number[]} = {date: new Date(), hours: [], temperatures: []};
 
     highlightedDayIndex: number | null = null;
+
+    selectedDayIndex: number | null = null; // Uchováva index vybraného dňa
 
     ngOnInit(): void {
         this.initializeDays(); // Inicializácia dátumov na základe aktuálneho dňa
@@ -51,10 +55,6 @@ export class WeekComponent implements OnInit {
         return daysOfWeek[date.getDay()]; // Vrátime názov dňa podľa indexu
     }
 
-    onTabChange(event: any): void {
-        console.log('Aktuálny index karty:', event.index);
-    }
-
     receiveDate(date: string) {
         this.setDay = date;
     }
@@ -63,8 +63,31 @@ export class WeekComponent implements OnInit {
         this.highlightedDayIndex = index; // Nastaviť index zvýrazneného dňa
     }
 
-    getChartData(chartData: {hours: number[], temperatures: number[]}) {
+    getChartData(chartData: {date: Date, hours: number[], temperatures: number[]}) {
         this.chartData = chartData;
     }
+
+    switchDay(index: number) {
+        this.selectedDayIndex = index; // Uloží vybraný index
+    }
+
+    getPageIndex(pageIndex: number): void {
+        this.selectedDayIndex = pageIndex;
+    }
+
+    isSelected(index: number): boolean {
+        return this.selectedDayIndex === index; // Skontroluje, či je daný deň vybraný
+    }
+
+    isToday(date: string | null | undefined): boolean {
+        const today: Date = new Date();
+        const parsedDate: Date = new Date(date!);
+        return today.toDateString() === parsedDate.toDateString();
+    }
+
+    switchDate(date: { day: string, date: string; }): void {
+        this.setDay = date.date;
+    }
+
 }
 

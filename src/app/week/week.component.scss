@@ -49,3 +49,38 @@ main {
         }
     }
 }
+
+.day {
+    padding: 0 15px;
+    border: 1px solid rgb(204, 204, 204);
+    background-color: rgb(255, 255, 255);
+    text-shadow: rgb(255, 255, 255) 1px 1px 2px;
+    color: black;
+    width: 120px;
+    font-size: 13px;
+    line-height: 1.6;
+    border-radius: 6px;
+    height: fit-content;
+
+    border-radius: 6px;
+    background: #c8ddf9;
+    box-shadow: 5px 5px 10px #a0b1c7,
+        -5px -5px 10px #f0ffff;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.highlighted-day {
+    border: 2px solid rgb(2, 136, 247);
+    border-radius: 6px;
+    height: fit-content;
+    box-shadow: none;
+}
+
+.today {
+    background-color: rgb(2, 136, 247);
+    color: #fff;
+    text-shadow: 1px 1px 1px black;
+}
